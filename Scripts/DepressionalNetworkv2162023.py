@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-DepressionalNetwork (v2142023)
+DepressionalNetwork (v2162023)
 This is a module for creating a network of flow connected surface depressions, and simulating time-integrated flow cascades between
 them.
 This version contains two classes: Depression and DepressionalNetwork
@@ -541,9 +541,7 @@ def ConstructUpstreamSets(deptable,jointable):
         deptable.at[row.Index, 'UpstreamDepressions'] = depset
 
 def UpdateTypesAndFlags(deptable):
-    '''This function classifies depressions according to their network type. 
-    In the manuscript, the term disjunct' is used. 
-    This is synonymous with 'isolated' in the code'''
+    '''This function classifies depressions according to their respective network types.'''
     deptable['DuplicateFlag'] = pd.Series(dtype='str')
     deptable['DepressionType'] = pd.Series(dtype='str')
     
@@ -562,12 +560,13 @@ def UpdateTypesAndFlags(deptable):
         else:
             compset = set(usset) & set(dsset)
             if len(compset) > 0:
+                #This checks the union of the upslope and downslope sets for depressions that appear in both, indicating a circular loop. This depression is flagged.
                 deptable.at[row.Index,'DuplicateFlag'] = 'Duplicate'
             deptable.at[row.Index,'DepressionType'] = 'Interior'
             continue
 
 def CheckNetworkStructure(deptable):
-    '''This function checks the network structure for circular loops. 
+    '''This function checks the network structure for circular loops and inconsistencies in the network structure. 
     All depressions should route to the outlet feature eventually.'''
     deptable['StructureFlag'] = pd.Series(dtype='str')
     flag1 = ''
@@ -581,21 +580,26 @@ def CheckNetworkStructure(deptable):
         dset = row.DownstreamDepressions
         
         for _dep in uset:
+            #For each depression in the upslope set of dep, check whether dep is in its downslope set.
             record = deptable[deptable['DepressionID'] == _dep]
             _dset = record['DownstreamDepressions'].values[0]
             index = record.index[0]
             
+            #If not, assign a flag value to dep indicating that there is inconsistency between its upslope set and the downslope set of one of its upslope depressions (Flag1)
+            #and, assign a flag value to the upslope depression that there is an inconsistency between its downslope set and the upslope set of one of its downslope depressions (Flag2)
             if not dep in _dset:
-                deptable.at[row.Index,'StructureFlag'] = flag1 + '|' + str(_dep)
-                deptable.at[index,'StructureFlag'] = flag2 + '|' + str(dep)
-        
+                deptable.at[row.Index,'StructureFlag'] = flag1 + ':' + str(_dep)
+                deptable.at[index,'StructureFlag'] = flag2 + ':' + str(dep)
+            
         for _dep in dset:
+             #For each depressionin the downslope set of dep, check whether dep is in its upslope set. 
             record = deptable[deptable['DepressionID'] == _dep]
-            print(_dep)
             _uset = record['UpstreamDepressions'].values[0]
             
+            #If not, assign a flag value to dep indicating that there is inconsistency between its downslope set and the upslope set of one of its upslope depressions (Flag3)
+            #and, assign a flag value to the downslope depression that there is an inconsistency between its upslope set and the downslope set of one of its upslope depressions (Flag4)
             if not dep in _uset:
-                deptable.at[row.Index,'StructureFlag'] = flag3 + '|' + str(_dep)
-                deptable.at[index,'StructureFlag'] = flag4 + '|' + str(dep)
+                deptable.at[row.Index,'StructureFlag'] = flag3 + ':' + str(_dep)
+                deptable.at[index,'StructureFlag'] = flag4 + ':' + str(dep)
 
         
