@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-DepressionalNetwork (v11142022)
-This is a module for creating a network of flow connected surface depressions, and simulating flow cascades between
+DepressionalNetwork (v2142023)
+This is a module for creating a network of flow connected surface depressions, and simulating time-integrated flow cascades between
 them.
 This version contains two classes: Depression and DepressionalNetwork
+The only dependency is the Pandas data frame package
 """
 
 import pandas as pd
@@ -14,8 +15,9 @@ class Depression(object):
         self.maximum_area = Amax
         self.maximum_depth = Hmax
         self.local_contributing_area = Acat + Amax
-        self.local_catchment_area = Acat + Amax - Amax
+        self.local_catchment_area = self.local_contributing_area - Amax
         self.depression_type = Depression Type
+        
     '''
     def __init__(self, identifier, maximum_volume, maximum_area, maximum_depth, local_contributing_area, upstream_depressions, downstream_depressions, depression_type = None, curve_number = 100, initial_volume = 0.0):
         self.identifier = identifier
@@ -456,7 +458,7 @@ class DepressionalNetwork:
         for disjunct in disjuncts:
             Qr += disjunct.accumulate_runoff_uniform(precipitation) 
             if disjunct.export > 0.0:
-                Dr.add(isolated)
+                Dr.add(disjunct)
         
         for dep in Dr:
             Ar += dep.local_contributing_area

@@ -8,3 +8,10 @@ in Green and Crumpton (2023).
 The file ExampleNetworkDepressionData.txt contains the depressional morphology data for the example network featured in Figure 3 in Green and Crumpton (2023).
 The file ExampleNetworkJoinTable.txt contains the network connectivity data for the example network featured in Figure 3 in Green and Crumpton (2023).
 
+The data contained in the ExampleNetworkJoinTable is used to construct the sets of upslope and downslope neighboring depressions for each depression in the network.
+This process is performed using the ConstructUpstreamSets and ConstructDownstreamSets methods of the DepressionalNetwork class.
+
+Figure 3 in the article is an older version, and was accidentally included in the final publication. 
+The figure produced by the ExampleNetworkRun script is the correct version.
+The article is presently being updated to include the correct version of Figure 3.
+
