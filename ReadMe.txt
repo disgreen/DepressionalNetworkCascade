@@ -1,5 +1,5 @@
-The Python 2.7 file DepressionalNetworkv2142023 (last updated Febreaury 14, 2023) contains the Depression and Depressional Network classes for 
-constructing depressional networks from provided depressional attribute data, as described in Green and Crumpton (2023).
+The Python 2.7 file DepressionalNetworkv2162023 (last updated February 16, 2023) contains the Depression and DepressionalNetwork classes for 
+constructing depressional networks from provided depressional attribute data, and "simulating" time-integrated flow through them, as described in Green and Crumpton (2023).
 
 The Python 2.7 file ExampleNetworkRun provides an example of how the Depression and DepressionalNetowork classes can be used to construct a depressional
 network from provided data, simulate the routing of precipitation through the network, and calculate some depressional network properties, as listed and discussed in Green and Crumpton (2023).
