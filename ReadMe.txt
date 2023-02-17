@@ -12,10 +12,10 @@ The data contained in the ExampleNetworkJoinTable is used to construct the sets 
 This process is performed using the ConstructUpstreamSets and ConstructDownstreamSets methods of the DepressionalNetwork class.
 
 To use the ExampleNetworkRun script download the DepressionalNetworkv2142023 and ExampleNetworkRun python files, and the 
-ExampleNetworkDepressionData and ExampleNetworkJoinTable text files to your chosen folder. Change the input and output directories in the ExampleNetworkRun script to point to the ExampleNetworkDepressionData and ExampleNetworkJoinTable files.
+ExampleNetworkDepressionData and ExampleNetworkJoinTable text files to your chosen folders. Change the input and output directories in the ExampleNetworkRun script to point to the ExampleNetworkDepressionData and ExampleNetworkJoinTable files.
 
 The folder named "Outputs" contains copies of the files that are created during execution of the ExampleNetworkRun script. 
 
-Figure 3 in the article is an older, incorrect version that was accidentally included in the final publication. 
+Figure 3 in the article is an older, incorrectly scaled version that was accidentally included in the final publication. 
 The figure produced by the ExampleNetworkRun script is the correct version.
 The article is presently being updated to include the correct version of Figure 3.
